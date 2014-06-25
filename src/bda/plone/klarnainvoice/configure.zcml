@@ -1,0 +1,18 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:i18n="http://namespaces.zope.org/i18n"
+           xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+           i18n_domain="bda.plone.klarnainvoice">
+
+
+  <i18n:registerTranslations directory="locales" />
+ 
+   <genericsetup:registerProfile
+    name="default"
+    title="bda.plone.klarnainvoice"
+    directory="profiles/default"
+    description="Adds Klarna invoice processor to bda,plone.shop"
+    provides="Products.GenericSetup.interfaces.EXTENSION" />
+    
+ 
+  <include package=".klarna_invoice" />
+</configure>

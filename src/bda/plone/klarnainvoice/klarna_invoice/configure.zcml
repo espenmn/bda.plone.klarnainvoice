@@ -1,0 +1,22 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:browser="http://namespaces.zope.org/browser">
+
+  <adapter name="klarna_invoice" factory=".KlarnaInvoice" />
+  
+  <browser:page
+    for="*"
+    name="klarna_invoice"
+    class=".KlarnaInvoicePay"
+    permission="zope2.View"
+  />
+  
+  <browser:page
+    for="*"
+    name="klarna_paid"
+    class=".KlarnaInvoicePaid"
+    permission="zope2.View"
+  />
+  
+
+
+</configure>

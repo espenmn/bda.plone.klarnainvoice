@@ -1,0 +1,86 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2014-05-29 14:56+0000\n"
+"PO-Revision-Date: 2014-05-29 19:56+0100\n"
+"Last-Translator: Espen Moe-Nilssen <espen@medialog.no>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: DOMAIN\n"
+"X-Generator: Poedit 1.5.7\n"
+
+#. Default: "Klarna"
+#: __init__.py:14
+msgid "Klarna"
+msgstr ""
+
+#. Default: "Eid"
+#: __init__.py:21
+msgid "eid"
+msgstr "Klarna EID"
+
+#. Default: "Klarna"
+#: klarna_invoice/__init__.py:27
+msgid "klarna"
+msgstr "Klarna"
+
+#. Default: "Payment has been aborted."
+#: klarna_invoice/aborted.pt:25
+msgid "klarna_invoice_aborted_text"
+msgstr ""
+
+#. Default: "Payment Error"
+#: klarna_invoice/success.pt:35
+msgid "klarna_invoice_error"
+msgstr "En feil har oppstått"
+
+#. Default: "Sorry. Failed to complete your order. If you think the failure remains on our side, please contact"
+#: klarna_invoice/failed.pt:26
+msgid "klarna_invoice_failed_text"
+msgstr ""
+
+#. Default: "Payment Success"
+#: klarna_invoice/success.pt:24
+msgid "klarna_invoice_success"
+msgstr ""
+
+#. Default: "Your Order has been completed successful."
+#: klarna_invoice/success.pt:27
+msgid "klarna_invoice_success_text"
+msgstr ""
+
+#. Default: "Something nasty is going on. Payment verification failed. If you think the failure remains on our side, please contact"
+#: klarna_invoice/success.pt:39
+msgid "klarna_invoice_verification_failed"
+msgstr ""
+
+#. Default: "Payment Aborted"
+#: klarna_invoice/aborted.pt:22
+msgid "invoice_aborted"
+msgstr "Betalingen ble avbrutt"
+
+#. Default: "continue"
+#: klarna_invoice/aborted.pt:29 klarna_invoice/failed.pt:35
+#: klarna_invoice/success.pt:52
+msgid "invoice_done"
+msgstr "Betaling utført"
+
+#. Default: "Payment Failed"
+#: klarna_invoice/failed.pt:22
+msgid "invoice_failed"
+msgstr "Betaling mislyktes"
+
+#. Default: "Shared Secret"
+#: __init__.py:25
+msgid "secret"
+msgstr ""
+
+#: klarna_invoice/failed.pt:30 klarna_invoice/success.pt:43
+msgid "us"
+msgstr ""

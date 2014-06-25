@@ -1,0 +1,11 @@
+.pyc
+src/bda.plone.klarnapayment.egg-info/
+
+
+src/bda.plone.klarnapayment.egg-info
+src/bda.plone.payment.egg-info
+src/bda.plone.payment.egg-info/
+
+*.pyc
+
+*.mo

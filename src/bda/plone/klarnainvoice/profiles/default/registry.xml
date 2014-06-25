@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<registry>
+
+  <records interface="bda.plone.klarnainvoice.IKlarnaInvoiceSettings">
+    <value key="klarna_eid" purge="false">2290</value>
+    
+    <value key="klarna_secret" purge="false">qzjaNjloMvifB6z</value>
+    
+    <value key="klarna_terms_uri" purge="false">http://www.mysite.com/terms</value>
+    
+    <value key="klarna_confirmation_uri" purge="false">http://www.mysite.com/confirm
+    </value>
+
+  </records>
+
+</registry>
