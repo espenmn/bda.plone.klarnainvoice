@@ -74,9 +74,9 @@ class KlarnaInvoicePay(BrowserView):
         config = klarna.Config(
             eid=eid,
             secret=shared_secret,
-            country='NO',
-            language='NO',
-            currency=currency,
+            country='nor',
+            language='no',
+            currency='NOK',
             mode='beta',
             pcstorage='json',
             pcuri='/srv/pclasses.json',
