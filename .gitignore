@@ -11,3 +11,18 @@ src/bda.plone.payment.egg-info/
 *.mo
 
 src/bda.plone.klarnainvoice.egg-info
+src/bda/plone/klarnainvoice/klarna_invoice/.DS_Store
+
+src/bda/plone/klarnainvoice/.DS_Store
+
+src/bda/plone/.DS_Store
+
+src/bda/plone/klarnainvoice/profiles/default/.DS_Store
+
+src/bda/plone/klarnainvoice/profiles/.DS_Store
+
+src/bda/.DS_Store
+
+src/.DS_Store
+
+.DS_Store
