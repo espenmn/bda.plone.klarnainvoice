@@ -8,8 +8,7 @@
     
     <value key="klarna_terms_uri" purge="false">http://www.mysite.com/terms</value>
     
-    <value key="klarna_confirmation_uri" purge="false">http://www.mysite.com/confirm
-    </value>
+    <value key="klarna_confirmation_uri" purge="false">http://www.mysite.com/confirm</value>
 
   </records>
 

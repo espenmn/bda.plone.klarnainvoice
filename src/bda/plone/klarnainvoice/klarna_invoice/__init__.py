@@ -1,6 +1,9 @@
     # -*- coding: utf-8 -*-
 
+import sys
 import klarna
+
+from klarna.const import *
 
 import logging
 from Acquisition import aq_inner
@@ -61,14 +64,11 @@ class KlarnaInvoicePay(BrowserView):
         order = dict(order_data.order.attrs)
         
         # Merchant ID
-        eid = settings.klarna_eid
+        eid = 2280
         
         # Shared Secret
-        shared_secret = settings.klarna_secret
+        shared_secret = 'qzjaNjloMvifB6z'
         
-        #other settings from control panel
-        terms_uri        =  settings.klarna_terms_uri
-        confirmation_uri =  settings.klarna_confirmation_uri
         
         #Initialize the Klarna object
         config = klarna.Config(
@@ -91,35 +91,35 @@ class KlarnaInvoicePay(BrowserView):
         #Add the cart items
         for booking in order_data.bookings:
             k.add_article(
-                        qty = int(booking.attrs['buyable_count']),
-                        title = booking.attrs['title'],
-                        price = int((booking.attrs.get('net', 0.0)*100)+(booking.attrs.get('net', 0.0)*booking.attrs.get('vat', 0.0))),
-                        discount = int((booking.attrs['discount_net'])*100),
-                        vat = int(booking.attrs.get('vat', 0.0)*100),
-                        flags = 'GoodsIs.INC_VAT')
+                        qty = 1,
+                        title = 'tittel',
+                        price =  100,
+                        vat =  25,
+                        flags = GoodsIs.INC_VAT)
                         
         #Add Consumer Information
         addr = klarna.Address(
             email= order['personal_data.email'],
             telno='',
             cellno='015 2211 3356',
-            fname='Testperson-de',
+            fname='Testperson-no',
             lname='Approved',
             careof='',
             street='Hellersbergstraße',
-            zip=billing_address.zip,
+            zip='0563',
             city='Oslo',
             country='NO')
             
         k.shipping = addr
         k.billing = addr
         
+        
         ## Set customer IP
         k.clientip = '78.47.10.94'
         
         (reservation_number, order_status) = k.reserve_amount(
-            data['amount'],
-            Gender.MALE,
+            '07071960',
+            1,
             pclass=klarna.PClass.Type.INVOICE
         )
         
