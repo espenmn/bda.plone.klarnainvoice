@@ -9,3 +9,5 @@ src/bda.plone.payment.egg-info/
 *.pyc
 
 *.mo
+
+src/bda.plone.klarnainvoice.egg-info

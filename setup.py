@@ -29,6 +29,7 @@ setup(
         'setuptools',
         'Plone',
         'bda.plone.shop',
+        'Klarna_API'
     ],
     extras_require={
         'test': [

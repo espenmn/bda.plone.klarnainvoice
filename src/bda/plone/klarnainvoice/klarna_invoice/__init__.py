@@ -1,4 +1,6 @@
-# -*- coding: utf-8 -*-
+    # -*- coding: utf-8 -*-
+
+import klarna
 
 import logging
 from Acquisition import aq_inner
@@ -10,11 +12,11 @@ from plone.registry.interfaces import IRegistry
 from plone.app.uuid.utils import uuidToURL
 
 #from bda.plone.orders.common import get_order
-from bda.plone.invoice import (
+from bda.plone.payment import (
                                Payment,
                                Payments,
                                )
-from bda.plone.invoice.interfaces import IPaymentData
+from bda.plone.payment.interfaces import IPaymentData
 from bda.plone.orders.common import OrderData
 from bda.plone.shop.interfaces import IShopSettings
 
@@ -66,74 +68,58 @@ class KlarnaInvoicePay(BrowserView):
         
         #other settings from control panel
         terms_uri        =  settings.klarna_terms_uri
-        checkout_uri     =  settings.klarna_checkout_uri
         confirmation_uri =  settings.klarna_confirmation_uri
-        push_uri         =  settings.klarna_push_uri
+        
+        #Initialize the Klarna object
+        config = klarna.Config(
+            eid=eid,
+            secret=shared_secret,
+            country='NO',
+            language='NO',
+            currency=currency,
+            mode='beta',
+            pcstorage='json',
+            pcuri='/srv/pclasses.json',
+            scheme='https',
+            candice=True,
+        )
+
+        k = klarna.Klarna(config)
+        k.init()
+        
         
         #Add the cart items
-        cart = list()
         for booking in order_data.bookings:
-            cart.append({
-                        'quantity': int(booking.attrs['buyable_count']),
-                        'reference': uuidToURL(booking.attrs['buyable_uid']),
-                        'name': booking.attrs['title'],
-                        'unit_price': int((booking.attrs.get('net', 0.0)*100)+(booking.attrs.get('net', 0.0)*booking.attrs.get('vat', 0.0))),
-                        'discount_rate': int((booking.attrs['discount_net'])*100),
-                        'tax_rate': int(booking.attrs.get('vat', 0.0)*100),
-        })
+            k.add_article(
+                        qty = int(booking.attrs['buyable_count']),
+                        title = booking.attrs['title'],
+                        price = int((booking.attrs.get('net', 0.0)*100)+(booking.attrs.get('net', 0.0)*booking.attrs.get('vat', 0.0))),
+                        discount = int((booking.attrs['discount_net'])*100),
+                        vat = int(booking.attrs.get('vat', 0.0)*100),
+                        flags = 'GoodsIs.INC_VAT')
+                        
+        #Add Consumer Information
+        addr = klarna.Address(
+            email= order['personal_data.email'],
+            telno='',
+            cellno='015 2211 3356',
+            fname='Testperson-de',
+            lname='Approved',
+            careof='',
+            street='Hellersbergstraße',
+            zip=billing_address.zip,
+            city='Oslo',
+            country='NO')
+            
+        k.shipping = addr
+        k.billing = addr
         
-        create_data = {}
-        create_data["cart"] = {"items": []}
+        ## Set customer IP
+        k.clientip = '78.47.10.94'
         
-        for item in cart:
-            create_data["cart"]["items"].append(item)
+        (reservation_number, order_status) = k.reserve_amount(
+            data['amount'],
+            Gender.MALE,
+            pclass=klarna.PClass.Type.INVOICE
+        )
         
-        #Configure the checkout order
-        #import pdb; pdb.set_trace()
-        create_data['purchase_country'] = 'NO'
-        create_data['purchase_currency'] = currency
-        create_data['locale'] = 'nb-no'
-        
-        create_data['shipping_address'] = {
-            'email'        : order['personal_data.email'],
-            'postal_code'  : order['billing_address.zip'],
-        }
-        
-        create_data['merchant'] = {
-            'id'                : eid,
-            'terms_uri'         : terms_uri,
-            'checkout_uri'      : checkout_uri,
-            'confirmation_uri'  : confirmation_uri,
-            'push_uri'          : push_uri,
-        }
-        
-        
-        # Create a checkout order
-        klarnacheckout.Order.base_uri = \
-            'https://checkout.testdrive.klarna.com/checkout/orders'
-        klarnacheckout.Order.content_type = \
-            'application/vnd.klarna.checkout.aggregated-order-v2+json'
-        
-        connector = klarnacheckout.create_connector(shared_secret)
-        
-        order = klarnacheckout.Order(connector)
-        order.create(create_data)
-        
-        # Render the checkout snippet
-        
-        order.fetch()
-        
-        # Store location of checkout session
-        #session["klarna_checkout"] = order.location
-        
-        # Display checkout
-        return "<div>%s</div>" % (order["gui"]["snippet"])
-
-
-#class KlarnaInvoicePaid(BrowserView):
-#    """
-#        for klarnas PUSH
-#    """
-#
-#    def __call__(self):
-#        self.request.response.setStatus(201)

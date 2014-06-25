@@ -34,7 +34,6 @@ class IKlarnaInvoiceSettings(model.Schema):
                required=True
     )
     
-    
     klarna_confirmation_uri = schema.ASCIILine(title=_(u'klarna_confirmation_uri', default=u'Confirmation URI'),
                required=True
     )
