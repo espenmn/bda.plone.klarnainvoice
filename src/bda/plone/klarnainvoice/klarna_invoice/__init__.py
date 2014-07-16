@@ -67,11 +67,11 @@ class KlarnaInvoicePay(BrowserView):
         
         # Merchant ID
         eid = settings.klarna_eid
-        eid = 2280
+        #eid = 200
           
         # Shared Secret
         shared_secret = settings.klarna_secret
-        shared_secret = 'qzjaNjloMvifB6z'
+        #shared_secret = 'test'
          
         #other settings from control panel
         terms_uri        =  settings.klarna_terms_uri
@@ -89,10 +89,8 @@ class KlarnaInvoicePay(BrowserView):
             pcuri='/srv/pclasses.json',
             scheme='https',
             candice=True,
-            pno_encoding=4,
-            pno='01122015',
-            
         )
+        
 
         k = klarna.Klarna(config)
         k.init()
@@ -104,8 +102,8 @@ class KlarnaInvoicePay(BrowserView):
                         qty         = int(booking.attrs['buyable_count']),
                         title       = str(booking.attrs['title']),
                         price       = int((booking.attrs.get('net', 0.0)*100)+(booking.attrs.get('net', 0.0)*booking.attrs.get('vat', 0.0))),
-                        discount    = int((booking.attrs['discount_net'])*100),
-                        vat         = int(booking.attrs.get('vat', 0.0)*100),
+                        discount    = int((booking.attrs['discount_net'])),
+                        vat         = int(booking.attrs.get('vat', 0.0)),
                         flags       = GoodsIs.INC_VAT,
         )
         
@@ -132,7 +130,7 @@ class KlarnaInvoicePay(BrowserView):
         
         #what is the number below
         (reservation_number, order_status) = k.reserve_amount(
-            '07071960',
+            '01121579533',
             Gender.MALE,
             pclass=klarna.PClass.Type.INVOICE,
         )
