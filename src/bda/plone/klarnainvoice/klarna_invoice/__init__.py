@@ -64,11 +64,16 @@ class KlarnaInvoicePay(BrowserView):
         order = dict(order_data.order.attrs)
         
         # Merchant ID
+        eid = settings.klarna_eid
         eid = 2280
-        
+          
         # Shared Secret
+        shared_secret = settings.klarna_secret
         shared_secret = 'qzjaNjloMvifB6z'
-        
+         
+        #other settings from control panel
+        terms_uri        =  settings.klarna_terms_uri
+        confirmation_uri =  settings.klarna_confirmation_uri
         
         #Initialize the Klarna object
         config = klarna.Config(
@@ -82,6 +87,9 @@ class KlarnaInvoicePay(BrowserView):
             pcuri='/srv/pclasses.json',
             scheme='https',
             candice=True,
+            pno_encoding=4,
+            pno='01122015',
+            
         )
 
         k = klarna.Klarna(config)
@@ -90,25 +98,28 @@ class KlarnaInvoicePay(BrowserView):
         
         #Add the cart items
         for booking in order_data.bookings:
+            import pdb; pdb.set_trace()
             k.add_article(
-                        qty = 1,
-                        title = 'tittel',
-                        price =  100,
-                        vat =  25,
-                        flags = GoodsIs.INC_VAT)
-                        
-        import pdb; pdb.set_trace()
+                        qty = int(booking.attrs['buyable_count']),
+                        title = str(booking.attrs['title']),
+                        price = int((booking.attrs.get('net', 0.0)*100)+(booking.attrs.get('net', 0.0)*booking.attrs.get('vat', 0.0))),
+                        discount = int((booking.attrs['discount_net'])*100),
+                        vat =int(booking.attrs.get('vat', 0.0)*100),
+                        flags = GoodsIs.INC_VAT,
+        )
+        
+        
         #Add Consumer Information
         addr = klarna.Address(
-            email= 'youremail@email.com',
+            email= order['personal_data.email'],
             telno='',
-            cellno='40 123 456',
-            fname='Testperson-no',
-            lname='Approved',
+            cellno=order['personal_data.phone'],
+            fname=order['personal_data.firstname'],
+            lname=order['personal_data.lastname'],
             careof='',
-            street='Sæffleberggate 56',
-            zip='0563',
-            city='Oslo',
+            street='billing_address.street',
+            zip='billing_address.zip',
+            city='billing_address.city',
             country='NO')
             
         k.shipping = addr
@@ -119,8 +130,8 @@ class KlarnaInvoicePay(BrowserView):
         k.clientip = '84.48.92.31'
         
         (reservation_number, order_status) = k.reserve_amount(
-            '011215',
-            1,
-            pclass=klarna.PClass.Type.INVOICE
+            '070719601',
+            Gender.MALE,
+            pclass=klarna.PClass.Type.INVOICE,
         )
         
