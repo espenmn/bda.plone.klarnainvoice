@@ -80,7 +80,7 @@ class KlarnaInvoicePay(BrowserView):
             mode='beta',
             pcstorage='json',
             pcuri='/srv/pclasses.json',
-            scheme='http',
+            scheme='https',
             candice=True,
         )
 
