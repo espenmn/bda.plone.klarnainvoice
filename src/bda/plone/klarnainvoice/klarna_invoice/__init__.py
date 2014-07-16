@@ -75,12 +75,12 @@ class KlarnaInvoicePay(BrowserView):
             eid=str(eid),
             secret=str(shared_secret),
             country='NO',
-            language='NO',
+            language='NB',
             currency='NOK',
             mode='beta',
             pcstorage='json',
             pcuri='/srv/pclasses.json',
-            scheme='https',
+            scheme='http',
             candice=True,
         )
 
