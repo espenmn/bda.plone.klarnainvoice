@@ -43,11 +43,13 @@ class KlarnaInvoice(Payment):
 
 class KlarnaInvoicePay(BrowserView):
     """
-        uses klarna  
+        payment with klarna invoice 
         """
+        
     
     def __call__(self, **kw):
         uid = self.request['uid']
+        ip = self.request.get('HTTP_X_FORWARDED_FOR') or self.request.get('REMOTE_ADDR')
         base_url = self.context.absolute_url()
         registry = getUtility(IRegistry)
         settings = registry.forInterface(IKlarnaInvoiceSettings)
@@ -98,14 +100,13 @@ class KlarnaInvoicePay(BrowserView):
         
         #Add the cart items
         for booking in order_data.bookings:
-            import pdb; pdb.set_trace()
             k.add_article(
-                        qty = int(booking.attrs['buyable_count']),
-                        title = str(booking.attrs['title']),
-                        price = int((booking.attrs.get('net', 0.0)*100)+(booking.attrs.get('net', 0.0)*booking.attrs.get('vat', 0.0))),
-                        discount = int((booking.attrs['discount_net'])*100),
-                        vat =int(booking.attrs.get('vat', 0.0)*100),
-                        flags = GoodsIs.INC_VAT,
+                        qty         = int(booking.attrs['buyable_count']),
+                        title       = str(booking.attrs['title']),
+                        price       = int((booking.attrs.get('net', 0.0)*100)+(booking.attrs.get('net', 0.0)*booking.attrs.get('vat', 0.0))),
+                        discount    = int((booking.attrs['discount_net'])*100),
+                        vat         = int(booking.attrs.get('vat', 0.0)*100),
+                        flags       = GoodsIs.INC_VAT,
         )
         
         
@@ -127,10 +128,11 @@ class KlarnaInvoicePay(BrowserView):
         
         
         ## Set customer IP
-        k.clientip = '84.48.92.31'
+        k.clientip = ip
         
+        #what is the number below
         (reservation_number, order_status) = k.reserve_amount(
-            '070719601',
+            '07071960',
             Gender.MALE,
             pclass=klarna.PClass.Type.INVOICE,
         )
