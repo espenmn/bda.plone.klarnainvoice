@@ -72,10 +72,10 @@ class KlarnaInvoicePay(BrowserView):
         
         #Initialize the Klarna object
         config = klarna.Config(
-            eid=eid,
-            secret=shared_secret,
-            country='nor',
-            language='no',
+            eid=str(eid),
+            secret=str(shared_secret),
+            country='NO',
+            language='NO',
             currency='NOK',
             mode='beta',
             pcstorage='json',
@@ -97,15 +97,16 @@ class KlarnaInvoicePay(BrowserView):
                         vat =  25,
                         flags = GoodsIs.INC_VAT)
                         
+        import pdb; pdb.set_trace()
         #Add Consumer Information
         addr = klarna.Address(
-            email= order['personal_data.email'],
+            email= 'youremail@email.com',
             telno='',
-            cellno='015 2211 3356',
+            cellno='40 123 456',
             fname='Testperson-no',
             lname='Approved',
             careof='',
-            street='Hellersbergstraße',
+            street='Sæffleberggate 56',
             zip='0563',
             city='Oslo',
             country='NO')
@@ -115,10 +116,10 @@ class KlarnaInvoicePay(BrowserView):
         
         
         ## Set customer IP
-        k.clientip = '78.47.10.94'
+        k.clientip = '84.48.92.31'
         
         (reservation_number, order_status) = k.reserve_amount(
-            '07071960',
+            '011215',
             1,
             pclass=klarna.PClass.Type.INVOICE
         )
