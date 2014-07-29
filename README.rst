@@ -11,19 +11,15 @@ Create translations
 ::
     $ cd src/bda/plone/klarnainvoice/
     $ ./i18n.sh
+    
 
-
+------------
 Author
 ============
-Espen-Moe-Nilssen
+Espen-Moe-Nilssen,
+espen*medialog.no
  
-
-Contributors
-============
-
+---
 To Do
 ============
-
-Add shipping
-
-Add discounts
+Get it to work

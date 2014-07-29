@@ -5,7 +5,6 @@ import klarna
 
 from klarna.const import *
 
-import logging
 from Acquisition import aq_inner
 from zope.component import getMultiAdapter
 from zope.i18nmessageid import MessageFactory
