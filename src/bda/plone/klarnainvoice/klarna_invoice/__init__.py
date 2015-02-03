@@ -1,5 +1,6 @@
     # -*- coding: utf-8 -*-
 
+import logging
 import sys
 import klarna
 
@@ -86,7 +87,7 @@ class KlarnaInvoicePay(BrowserView):
             mode='beta',
             pcstorage='json',
             pcuri='/srv/pclasses.json',
-            scheme='https',
+            scheme='http',
             candice=True,
         )
         
@@ -125,12 +126,16 @@ class KlarnaInvoicePay(BrowserView):
         
         
         ## Set customer IP
-        k.clientip = ip
+        k.clientip = '83.10.0.5'
         
         #what is the number below
         (reservation_number, order_status) = k.reserve_amount(
-            '01121579533',
+            '07071960',
             Gender.MALE,
+            amount=None,
             pclass=klarna.PClass.Type.INVOICE,
         )
         
+        
+        print '%s\t%s' % (result[0], result[1])
+
